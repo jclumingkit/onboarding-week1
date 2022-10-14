@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Food from "./food/Food";
+import DarkThemeButton from "../components/DarkThemeButton";
 
 const Home: NextPage = () => {
   return (
@@ -18,6 +19,9 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <Food />
       </main>
+      <footer>
+        <DarkThemeButton />
+      </footer>
     </div>
   );
 };
