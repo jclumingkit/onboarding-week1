@@ -9,7 +9,7 @@ import FoodCard from "./foodCard/FoodCard";
 const Food: FC = () => {
   const [searchFoodListInput, setSearchFoodListInput] = useState("");
 
-  const handleSearchFoodListInput = (query: string) => {
+  const handleSearchByName = (query: string) => {
     const searchResults = [...foodData].filter((FoodItem) =>
       FoodItem.name.toLowerCase().includes(query.toLowerCase())
     );
@@ -18,7 +18,7 @@ const Food: FC = () => {
   };
 
   const foodList: FoodType[] = useMemo(() => {
-    const searchResults = handleSearchFoodListInput(searchFoodListInput);
+    const searchResults = handleSearchByName(searchFoodListInput);
 
     return searchResults;
   }, [searchFoodListInput]);
@@ -31,9 +31,13 @@ const Food: FC = () => {
         onChange={(e) => setSearchFoodListInput(e.target.value)}
         placeholder="Search food here..."
       />
-      {foodList.map((foodItem) => (
-        <FoodCard key={foodItem.id} foodItem={foodItem} />
-      ))}
+      {foodList.length <= 0 ? (
+        <h6>Food not found</h6>
+      ) : (
+        foodList.map((foodItem) => (
+          <FoodCard key={foodItem.id} foodItem={foodItem} />
+        ))
+      )}
     </div>
   );
 };
