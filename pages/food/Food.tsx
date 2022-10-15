@@ -1,10 +1,13 @@
 import styles from "./Food.module.css";
 
 import { FC, useMemo, useState } from "react";
+
 import foodData from "../../data/foodData";
 import { FoodType } from "../../data/foodData";
-
 import FoodCard from "./foodCard/FoodCard";
+
+import { motion } from "framer-motion";
+import { cardList, cardItem } from "./Animate.variants";
 
 const Food: FC = () => {
   const [searchFoodListInput, setSearchFoodListInput] = useState("");
@@ -54,13 +57,17 @@ const Food: FC = () => {
       >
         Rating {toggleSortButton ? "↓" : "↑"}
       </button>
-      {foodList.length <= 0 ? (
-        <h6>Food not found</h6>
-      ) : (
-        foodList.map((foodItem) => (
-          <FoodCard key={foodItem.id} foodItem={foodItem} />
-        ))
-      )}
+      <motion.div initial="hidden" animate="visible" variants={cardList}>
+        {foodList.length <= 0 ? (
+          <h6>Food not found</h6>
+        ) : (
+          foodList.map((foodItem) => (
+            <motion.div key={foodItem.id} variants={cardItem}>
+              <FoodCard foodItem={foodItem} />
+            </motion.div>
+          ))
+        )}
+      </motion.div>
     </div>
   );
 };
