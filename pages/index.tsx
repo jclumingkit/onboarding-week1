@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import styles from "../styles/Home.module.css";
-import Food from "./food/Food";
 import DarkThemeButton from "../components/DarkThemeButton";
 
 const Home: NextPage = () => {
@@ -17,7 +17,11 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <Food />
+        <ul>
+          <li>
+            <Link href="/food">Day 1 Project</Link>
+          </li>
+        </ul>
       </main>
       <footer>
         <DarkThemeButton />
