@@ -1,0 +1,19 @@
+.btnHome {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: aliceblue;
+  font-size: 16px;
+  padding: 6px;
+}
+
+@media only screen and (min-width: 600px) {
+  .btnHome {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: aliceblue;
+    font-size: 32px;
+    padding: 12px;
+  }
+}
