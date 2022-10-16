@@ -5,39 +5,25 @@ import Image from "next/image";
 import { FoodType } from "../../../data/foodData";
 
 const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
-  const [showImageFullScreen, setShowImageFullScreen] = useState(false);
-  const modalRef = useRef<HTMLDivElement | null>(null);
+  const [showFullImage, setShowFullImage] = useState<boolean | null>(null);
+  const imageModalRef = useRef<HTMLDivElement | null>(null);
   const rating = new Array(foodItem.rating).fill("⭐");
-  console.log(`${modalRef.current?.className} : ${showImageFullScreen}`);
+
+  const closeImageModal = () => {
+    setShowFullImage(!showFullImage);
+    imageModalRef.current?.classList.remove(styles.showImage);
+  };
+
+  const showImageModal = () => {
+    setShowFullImage(!showFullImage);
+    imageModalRef.current?.classList.add(styles.showImage);
+  };
 
   return (
     <>
-      {/* {showImageFullScreen && (
-        <div
-          className={`${styles.modal} ${
-            showImageFullScreen ? styles.modalAnimate : styles.modalExit
-          }`}
-        >
-          <Image
-            priority
-            src={foodItem.image}
-            layout="fill"
-            objectFit="contain"
-            alt={foodItem.name}
-          />
-          <span
-            className={styles.modalCloseButton}
-            onClick={() => setShowImageFullScreen(!showImageFullScreen)}
-          >
-            &times;
-          </span>
-        </div>
-      )} */}
       <div
-        ref={(ref) => (modalRef.current = ref)}
-        className={`${styles.modal} ${
-          showImageFullScreen ? styles.modalShow : ""
-        }`}
+        className={styles.modal}
+        ref={(ref) => (imageModalRef.current = ref)}
       >
         <Image
           priority
@@ -46,10 +32,8 @@ const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
           objectFit="contain"
           alt={foodItem.name}
         />
-        <span
-          className={styles.modalCloseButton}
-          onClick={() => setShowImageFullScreen(!showImageFullScreen)}
-        >
+
+        <span className={styles.modalCloseButton} onClick={closeImageModal}>
           &times;
         </span>
       </div>
@@ -61,7 +45,7 @@ const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
             width={600}
             height={400}
             alt={foodItem.name}
-            onClick={() => setShowImageFullScreen(!showImageFullScreen)}
+            onClick={showImageModal}
           />
           <h2>{foodItem.name}</h2>
           <p>
