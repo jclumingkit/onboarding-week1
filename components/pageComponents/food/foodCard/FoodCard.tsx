@@ -4,7 +4,7 @@ import cn from "classnames";
 
 import { FC, useRef, useState } from "react";
 import Image from "next/image";
-import { FoodType } from "../../../data/foodData";
+import { FoodType } from "../../../../data/foodData";
 
 const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
   const [showFullImage, setShowFullImage] = useState<boolean | null>(null);

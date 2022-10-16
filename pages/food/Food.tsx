@@ -4,7 +4,7 @@ import { FC, useMemo, useState, useEffect } from "react";
 
 import foodData from "../../data/foodData";
 import { FoodType } from "../../data/foodData";
-import FoodCard from "./foodCard/FoodCard";
+import FoodCard from "../../components/pageComponents/food/foodCard/FoodCard";
 
 const Food: FC = () => {
   const [searchFoodListInput, setSearchFoodListInput] = useState("");
