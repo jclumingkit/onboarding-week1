@@ -1,5 +1,7 @@
 import styles from "./FoodCard.module.css";
 
+import cn from "classnames";
+
 import { FC, useRef, useState } from "react";
 import Image from "next/image";
 import { FoodType } from "../../../data/foodData";
@@ -8,20 +10,10 @@ const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
   const [showFullImage, setShowFullImage] = useState<boolean | null>(null);
   const imageModalRef = useRef<HTMLDivElement | null>(null);
 
-  const closeImageModal = () => {
-    setShowFullImage(!showFullImage);
-    imageModalRef.current?.classList.remove(styles.showImage);
-  };
-
-  const showImageModal = () => {
-    setShowFullImage(!showFullImage);
-    imageModalRef.current?.classList.add(styles.showImage);
-  };
-
   return (
     <>
       <div
-        className={styles.modal}
+        className={cn(styles.modal, showFullImage && styles.showImage)}
         ref={(ref) => (imageModalRef.current = ref)}
       >
         <Image
@@ -32,7 +24,10 @@ const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
           alt={foodItem?.name}
         />
 
-        <span className={styles.modalCloseButton} onClick={closeImageModal}>
+        <span
+          className={styles.modalCloseButton}
+          onClick={() => setShowFullImage(!showFullImage)}
+        >
           &times;
         </span>
       </div>
@@ -44,7 +39,7 @@ const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
             width={600}
             height={400}
             alt={foodItem?.name}
-            onClick={showImageModal}
+            onClick={() => setShowFullImage(!showFullImage)}
           />
           <h2>{foodItem?.name}</h2>
           <p>
