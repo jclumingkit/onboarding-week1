@@ -21,10 +21,10 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <h1>Onboarding Week 1 Projects</h1>
         <ul>
-          <li className={`darkmode-ignore ${styles.linkListItem}`}>
+          <li className={styles.linkListItem}>
             <Link href="/food">Day 1 and Day 2 Projects</Link>
           </li>
-          <li className={`darkmode-ignore ${styles.linkListItem}`}>
+          <li className={styles.linkListItem}>
             <Link href="/movie">Day 3 Projects</Link>
           </li>
         </ul>
