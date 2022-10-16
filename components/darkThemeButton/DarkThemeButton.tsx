@@ -1,3 +1,4 @@
+import styles from "./DarkThemeButton.module.css";
 import Darkmode from "darkmode-js";
 
 export default function DarkThemeButton() {
@@ -15,5 +16,5 @@ export default function DarkThemeButton() {
 
   const darkmode = new Darkmode(options);
 
-  return <div>{darkmode.showWidget()}</div>;
+  return <div className={styles.buttonContainer}>{darkmode.showWidget()}</div>;
 }

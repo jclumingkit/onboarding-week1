@@ -1,9 +1,57 @@
 .section {
   min-height: 100vh;
   padding: 4rem 0;
-  flex: 1;
+}
+
+.cardContainer {
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
+}
+
+/* animate cardContainer */
+.cardAnimate {
+  opacity: 1;
+  animation: top-to-bottom 1s ease-in-out backwards;
+}
+
+@keyframes top-to-bottom {
+  0% {
+    opacity: 0;
+    transform: translateY(-100vh);
+  }
+  75% {
+    opacity: 0.75;
+    transform: translateY(20vh);
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* filter */
+.filterContainer {
+  width: 320px;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  isolation: isolate;
+}
+
+.filterContainer input {
+  padding: 5px;
+  margin-right: 5px;
+  border-radius: 5px;
+}
+
+.filterContainer button {
+  padding: 5px;
+  border-radius: 5px;
+  background-color: gold;
+  font-size: 16px;
+}
+
+.filterContainer button:hover {
+  background-color: yellow;
 }
