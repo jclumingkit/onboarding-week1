@@ -25,11 +25,11 @@ const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
         ref={(ref) => (imageModalRef.current = ref)}
       >
         <Image
-          priority
           src={foodItem?.image}
           layout="fill"
           objectFit="contain"
           alt={foodItem?.name}
+          loading="lazy"
         />
 
         <span className={styles.modalCloseButton} onClick={closeImageModal}>
