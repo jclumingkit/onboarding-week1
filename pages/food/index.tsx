@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 
 import HomeButton from "../../components/homeButton/HomeButton";
-import DarkThemeButton from "../../components/DarkThemeButton";
+import DarkThemeButton from "../../components/darkThemeButton/DarkThemeButton";
 
 import Food from "./Food";
 

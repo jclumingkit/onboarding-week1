@@ -5,21 +5,24 @@ import Image from "next/image";
 import { FoodType } from "../../../data/foodData";
 
 const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
+  const rating = new Array(foodItem.rating).fill("⭐");
+
   return (
     <div className={styles.card}>
-      <Image
-        priority
-        src={foodItem.image}
-        // className=""
-        width={500}
-        height={400}
-        alt={foodItem.name}
-      />
       <div>
-        <h4>{foodItem.name}</h4>
-        <p>{foodItem.description}</p>
-        <p>Rating: {foodItem.rating}</p>
+        <Image
+          priority
+          src={foodItem.image}
+          width={600}
+          height={400}
+          alt={foodItem.name}
+        />
+        <h2>{foodItem.name}</h2>
+        <p>
+          <span className={styles.description}>{foodItem.description}</span>
+        </p>
       </div>
+      <h1>{rating}</h1>
     </div>
   );
 };
