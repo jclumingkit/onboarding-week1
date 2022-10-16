@@ -7,7 +7,7 @@ import { FoodType } from "../../../data/foodData";
 const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
   const [showFullImage, setShowFullImage] = useState<boolean | null>(null);
   const imageModalRef = useRef<HTMLDivElement | null>(null);
-  const rating = new Array(foodItem.rating).fill("⭐");
+ 
 
   const closeImageModal = () => {
     setShowFullImage(!showFullImage);
@@ -27,10 +27,10 @@ const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
       >
         <Image
           priority
-          src={foodItem.image}
+          src={foodItem?.image}
           layout="fill"
           objectFit="contain"
-          alt={foodItem.name}
+          alt={foodItem?.name}
         />
 
         <span className={styles.modalCloseButton} onClick={closeImageModal}>
@@ -41,18 +41,18 @@ const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
         <div>
           <Image
             priority
-            src={foodItem.image}
+            src={foodItem?.image}
             width={600}
             height={400}
-            alt={foodItem.name}
+            alt={foodItem?.name}
             onClick={showImageModal}
           />
-          <h2>{foodItem.name}</h2>
+          <h2>{foodItem?.name}</h2>
           <p>
-            <span className={styles.description}>{foodItem.description}</span>
+            <span className={styles.description}>{foodItem?.description}</span>
           </p>
         </div>
-        <h1>{rating}</h1>
+        <h1>{Array(foodItem?.rating).fill("⭐")}</h1>
       </div>
     </>
   );
