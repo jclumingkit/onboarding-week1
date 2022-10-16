@@ -1,19 +1,27 @@
 import styles from "./Food.module.css";
 
-import { FC, useMemo, useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import foodData from "../../data/foodData";
 import { FoodType } from "../../data/foodData";
 import FoodCard from "../../components/pageComponents/food/foodCard/FoodCard";
+import AddFoodModal from "../../components/pageComponents/food/addFoodModal/AddFoodModal";
 
-const Food: FC = () => {
+const Food = () => {
+  const [foodStorage, setFoodStorage] = useState<FoodType[]>([]);
   const [searchFoodListInput, setSearchFoodListInput] = useState("");
   const [toggleSortButton, setToggleSortButton] = useState(false);
   const [animateCard, setAnimateCard] = useState(false);
 
-  const handleSearchByName = (query: string) => {
-    const searchResults = [...foodData].filter((FoodItem) =>
-      FoodItem.name.toLowerCase().includes(query.toLowerCase())
+  useEffect(() => {
+    setAnimateCard(true);
+    localStorage.setItem("foodData", JSON.stringify(foodData));
+    setFoodStorage(JSON.parse(localStorage.foodData));
+  }, [setFoodStorage]);
+
+  const handleSearchByName = (query: string, [...foodStorage]) => {
+    const searchResults = [...foodStorage].filter((foodItem) =>
+      foodItem.name.toLowerCase().includes(query.toLowerCase())
     );
 
     return searchResults;
@@ -34,20 +42,20 @@ const Food: FC = () => {
     return sortedResults;
   };
 
-  const foodList: FoodType[] = useMemo(() => {
-    const searchResults = handleSearchByName(searchFoodListInput);
+  const foodList = useMemo(() => {
+    const searchResults = handleSearchByName(searchFoodListInput, foodStorage);
     const sortedResults = handleSortByRating(searchResults, toggleSortButton);
 
     return sortedResults;
-  }, [searchFoodListInput, toggleSortButton]);
-
-  useEffect(() => {
-    setAnimateCard(true);
-  }, []);
+  }, [searchFoodListInput, toggleSortButton, foodStorage]);
 
   return (
     <div className={styles.section}>
       <div className={styles.filterContainer}>
+        <AddFoodModal
+          foodStorage={foodStorage}
+          setFoodStorage={setFoodStorage}
+        />
         <input
           type="text"
           value={searchFoodListInput}

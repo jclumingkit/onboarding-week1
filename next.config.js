@@ -6,6 +6,14 @@ const nextConfig = {
     locales: ["en-US"],
     defaultLocale: "en-US",
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*",
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;
