@@ -6,9 +6,6 @@ import foodData from "../../data/foodData";
 import { FoodType } from "../../data/foodData";
 import FoodCard from "./foodCard/FoodCard";
 
-import { motion } from "framer-motion";
-import { cardList, cardItem } from "./Animate.variants";
-
 const Food: FC = () => {
   const [searchFoodListInput, setSearchFoodListInput] = useState("");
   const [toggleSortButton, setToggleSortButton] = useState(false);
@@ -57,17 +54,15 @@ const Food: FC = () => {
       >
         Rating {toggleSortButton ? "↓" : "↑"}
       </button>
-      <motion.div initial="hidden" animate="visible" variants={cardList}>
+      <div>
         {foodList.length <= 0 ? (
           <h6>Food not found</h6>
         ) : (
           foodList.map((foodItem) => (
-            <motion.div key={foodItem.id} variants={cardItem}>
-              <FoodCard foodItem={foodItem} />
-            </motion.div>
+            <FoodCard key={foodItem.id} foodItem={foodItem} />
           ))
         )}
-      </motion.div>
+      </div>
     </div>
   );
 };

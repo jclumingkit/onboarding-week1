@@ -1,7 +1,9 @@
+import styles from "../styles/Home.module.css";
+
 import type { NextPage } from "next";
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import Food from "./food/Food";
+import Link from "next/link";
+
 import DarkThemeButton from "../components/DarkThemeButton";
 
 const Home: NextPage = () => {
@@ -17,7 +19,15 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <Food />
+        <h1>Onboarding Week 1 Projects</h1>
+        <ul>
+          <li className={`darkmode-ignore ${styles.linkListItem}`}>
+            <Link href="/food">Day 1 and Day 2 Projects</Link>
+          </li>
+          <li className={`darkmode-ignore ${styles.linkListItem}`}>
+            <Link href="/movie">Day 3 Projects</Link>
+          </li>
+        </ul>
       </main>
       <footer>
         <DarkThemeButton />
