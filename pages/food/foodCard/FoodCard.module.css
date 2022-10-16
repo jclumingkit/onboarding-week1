@@ -39,36 +39,16 @@
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.8);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 1s ease;
+  transform: scale(0%);
 }
 
-.modalAnimate {
-  animation: grow-to-full 1s ease-in backwards;
-}
-
-@keyframes grow-to-full {
-  0% {
-    opacity: 0;
-    transform: scale(0%);
-  }
-  100% {
-    display: block;
-    opacity: 1;
-    transform: scale(100%);
-  }
-}
-
-.modalExit {
-  animation: shrink-to-none 1s ease-out;
-  animation-direction: reverse;
-}
-
-@keyframes shrink-to-none {
-  100% {
-    transform: scale(100%);
-  }
-  0% {
-    transform: scale(0%);
-  }
+.showImage {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(100%);
 }
 
 .modalCloseButton {
@@ -77,6 +57,7 @@
   right: 20px;
   font-size: 100px;
   cursor: pointer;
+  z-index: 1;
 }
 
 .modalCloseButton:hover {
