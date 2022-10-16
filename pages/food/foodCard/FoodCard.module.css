@@ -29,6 +29,41 @@
   line-height: 1.5;
 }
 
+/* modal */
+.modal {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 1s ease;
+  transform: scale(0%);
+}
+
+.showImage {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(100%);
+}
+
+.modalCloseButton {
+  color: white;
+  position: absolute;
+  right: 20px;
+  font-size: 100px;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.modalCloseButton:hover {
+  color: red;
+}
+
 @media (max-width: 768px) {
   .card {
     width: 90%;
@@ -37,6 +72,13 @@
   .grid {
     width: 100%;
     flex-direction: column;
+  }
+
+  .modalCloseButton {
+    color: white;
+    position: absolute;
+    right: 20px;
+    font-size: 50px;
   }
 }
 
