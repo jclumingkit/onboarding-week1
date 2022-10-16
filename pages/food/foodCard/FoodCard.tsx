@@ -7,11 +7,14 @@ import { FoodType } from "../../../data/foodData";
 const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
   const [showImageFullScreen, setShowImageFullScreen] = useState(false);
   const rating = new Array(foodItem.rating).fill("⭐");
-
   return (
     <>
       {showImageFullScreen && (
-        <div className={styles.modal}>
+        <div
+          className={`${styles.modal} ${
+            showImageFullScreen ? styles.modalAnimate : styles.modalExit
+          }`}
+        >
           <Image
             priority
             src={foodItem.image}
