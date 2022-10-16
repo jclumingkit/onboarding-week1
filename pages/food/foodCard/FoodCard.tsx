@@ -7,7 +7,6 @@ import { FoodType } from "../../../data/foodData";
 const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
   const [showFullImage, setShowFullImage] = useState<boolean | null>(null);
   const imageModalRef = useRef<HTMLDivElement | null>(null);
- 
 
   const closeImageModal = () => {
     setShowFullImage(!showFullImage);
