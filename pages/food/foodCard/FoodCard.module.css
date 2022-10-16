@@ -39,37 +39,25 @@
   height: 100%;
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+  display: none;
 }
 
-.modalAnimate {
-  animation: grow-to-full 1s ease-in backwards;
+.modalShow {
+  display: block;
+  opacity: 1;
 }
-
-@keyframes grow-to-full {
+/* @keyframes grow-to-full {
   0% {
     opacity: 0;
     transform: scale(0%);
   }
   100% {
-    display: block;
     opacity: 1;
     transform: scale(100%);
   }
-}
-
-.modalExit {
-  animation: shrink-to-none 1s ease-out;
-  animation-direction: reverse;
-}
-
-@keyframes shrink-to-none {
-  100% {
-    transform: scale(100%);
-  }
-  0% {
-    transform: scale(0%);
-  }
-}
+} */
 
 .modalCloseButton {
   color: white;

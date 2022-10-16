@@ -1,15 +1,18 @@
 import styles from "./FoodCard.module.css";
 
-import { FC, useState } from "react";
+import { FC, useRef, useState } from "react";
 import Image from "next/image";
 import { FoodType } from "../../../data/foodData";
 
 const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
   const [showImageFullScreen, setShowImageFullScreen] = useState(false);
+  const modalRef = useRef<HTMLDivElement | null>(null);
   const rating = new Array(foodItem.rating).fill("⭐");
+  console.log(`${modalRef.current?.className} : ${showImageFullScreen}`);
+
   return (
     <>
-      {showImageFullScreen && (
+      {/* {showImageFullScreen && (
         <div
           className={`${styles.modal} ${
             showImageFullScreen ? styles.modalAnimate : styles.modalExit
@@ -29,7 +32,27 @@ const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
             &times;
           </span>
         </div>
-      )}
+      )} */}
+      <div
+        ref={(ref) => (modalRef.current = ref)}
+        className={`${styles.modal} ${
+          showImageFullScreen ? styles.modalShow : ""
+        }`}
+      >
+        <Image
+          priority
+          src={foodItem.image}
+          layout="fill"
+          objectFit="contain"
+          alt={foodItem.name}
+        />
+        <span
+          className={styles.modalCloseButton}
+          onClick={() => setShowImageFullScreen(!showImageFullScreen)}
+        >
+          &times;
+        </span>
+      </div>
       <div className={styles.card}>
         <div>
           <Image
