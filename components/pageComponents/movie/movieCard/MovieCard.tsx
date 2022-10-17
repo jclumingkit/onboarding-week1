@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { useHover } from "@mantine/hooks";
 
 import { Card, Image, Text, Group, Badge, Tooltip } from "@mantine/core";
-import { MovieType } from "../../../../../data/movieData";
+import { MovieType } from "../../../../data/movieData";
 
 const MovieCard: FC<{ movieItem: MovieType }> = ({ movieItem }) => {
   const router = useRouter();
