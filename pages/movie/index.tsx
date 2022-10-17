@@ -5,6 +5,8 @@ import { MovieType } from "../../data/movieData";
 import favMovieIds from "../../data/movieData";
 import Movie from "./Movie";
 
+import DarkThemeButton from "../../components/DarkThemeButton/DarkThemeButton";
+
 const MOVIE_API = process.env.MOVIE_API || "";
 const API_KEY = process.env.API_KEY || "";
 const POSTER_API = process.env.POSTER_API || "";
@@ -50,7 +52,9 @@ const MoviePage: NextPage<{ movieList: MovieType[] }> = ({ movieList }) => {
       <main>
         <Movie movieList={movieList} />
       </main>
-      <footer></footer>
+      <footer>
+        <DarkThemeButton />
+      </footer>
     </div>
   );
 };

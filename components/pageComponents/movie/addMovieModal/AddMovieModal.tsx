@@ -91,7 +91,7 @@ const AddMovieModal: FC<Props> = (props) => {
       });
     }
   };
-  console.log(movieStorage);
+
   return (
     <>
       <Group position="center" my="md">
