@@ -1,20 +1,24 @@
-import styles from "./DarkThemeButton.module.css";
-import Darkmode from "darkmode-js";
+import styles from "./DarkModeButton.module.css";
 
-export default function DarkThemeButton() {
-  const options = {
-    top: "32px",
-    right: "32px",
-    mixColor: "#fff",
-    backgroundColor: "#fff",
-    buttonColorDark: "#100f2c",
-    buttonColorLight: "#fff",
-    saveInCookies: false,
-    label: "🌓",
-    autoMatchOsTheme: true,
-  };
+import { IconSun, IconMoonStars } from "@tabler/icons";
+import { Button, useMantineColorScheme } from "@mantine/core";
 
-  const darkmode = new Darkmode(options);
+const DarkModeButton = () => {
+  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const dark = colorScheme === "dark";
 
-  return <div className={styles.buttonContainer}>{darkmode.showWidget()}</div>;
-}
+  return (
+    <>
+      <Button
+        color={dark ? "yellow" : "dark"}
+        className={styles.btn}
+        onClick={() => toggleColorScheme()}
+        size="md"
+      >
+        {dark ? <IconSun size={30} /> : <IconMoonStars size={30} />}
+      </Button>
+    </>
+  );
+};
+
+export default DarkModeButton;

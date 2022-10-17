@@ -1,8 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-
-import HomeButton from "../../components/homeButton/HomeButton";
-import DarkThemeButton from "../../components/darkThemeButton/DarkThemeButton";
+import DarkThemeButton from "../../components/DarkThemeButton/DarkThemeButton";
 
 import Food from "./Food";
 
@@ -22,7 +20,6 @@ const FoodPage: NextPage = () => {
         <Food />
       </main>
       <footer>
-        <HomeButton />
         <DarkThemeButton />
       </footer>
     </div>

@@ -1,10 +1,20 @@
 import { Dispatch, SetStateAction, FC, useState } from "react";
-import { Modal, Button, TextInput, List, Group, Text } from "@mantine/core";
+import {
+  Modal,
+  Button,
+  TextInput,
+  Group,
+  SimpleGrid,
+  Text,
+  Image,
+  Card,
+  Badge,
+} from "@mantine/core";
 
 import { MovieType } from "../../../../data/movieData";
 import Swal from "sweetalert2";
 
-// import Swal from "sweetalert2";
+import HomeButton from "../../../homeButton/HomeButton";
 
 const MOVIE_API = process.env.MOVIE_API || "";
 const API_KEY = process.env.API_KEY || "";
@@ -30,7 +40,7 @@ type TSearchResult = {
 const AddMovieModal: FC<Props> = (props) => {
   const { movieStorage, setMovieStorage } = props;
   const [userQuery, setUserQuery] = useState<string>("");
-  const [searchResults, setSearchResults] = useState<TSearchResult[]>();
+  const [searchResults, setSearchResults] = useState<TSearchResult[]>([]);
   const [openModal, setOpenModal] = useState(false);
 
   const handleSearchMovie = async () => {
@@ -39,7 +49,16 @@ const AddMovieModal: FC<Props> = (props) => {
     );
     const data = await response.json();
 
-    setSearchResults(data.results);
+    if (response.status === 200 && data.results.length > 0) {
+      setSearchResults(data.results);
+      setOpenModal(true);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Movie not available",
+      });
+    }
   };
 
   const handleAddMovie = (movieId: number) => {
@@ -58,6 +77,11 @@ const AddMovieModal: FC<Props> = (props) => {
         };
         const newMovieStorage = [...movieStorage, ...[newMovie]];
         setMovieStorage(newMovieStorage);
+        Swal.fire({
+          icon: "success",
+          title: "Movie added!",
+          text: "Check the list to view your movie.",
+        });
       }
     } else {
       Swal.fire({
@@ -67,47 +91,79 @@ const AddMovieModal: FC<Props> = (props) => {
       });
     }
   };
-
+  console.log(movieStorage);
   return (
-    <div>
-      <Modal
-        fullScreen
-        size="lg"
-        opened={openModal}
-        onClose={() => setOpenModal(false)}
-        title="What is your favorite movie?"
-      >
+    <>
+      <Group position="center" my="md">
         <TextInput
           value={userQuery}
           onChange={(e) => setUserQuery(e.target.value)}
           placeholder="Search movies..."
+          mx="sm"
+          style={{ width: "300px" }}
         />
-        <Button onClick={handleSearchMovie}>Search</Button>
-        <List>
+        <Button size="md" onClick={handleSearchMovie}>
+          Search
+        </Button>
+        <HomeButton />
+      </Group>
+      <Modal
+        fullScreen
+        transition="fade"
+        closeButtonLabel="Exit Search Results"
+        opened={openModal}
+        onClose={() => setOpenModal(false)}
+      >
+        <Text weight={700} align="center">
+          <h1>Search Results</h1>
+        </Text>
+        <SimpleGrid
+          cols={4}
+          breakpoints={[
+            { maxWidth: 980, cols: 3, spacing: "md" },
+            { maxWidth: 755, cols: 2, spacing: "sm" },
+            { maxWidth: 600, cols: 1, spacing: "sm" },
+          ]}
+        >
           {searchResults?.map((result) => {
             return (
-              <List.Item key={result.id}>
-                <Group>
-                  <Text>{result.title}</Text>
-                  <Text>{result.vote_average}</Text>
-                  <Text>{result.release_date}</Text>
-                  <Button onClick={() => handleAddMovie(result.id)}>Add</Button>
+              <Card shadow="sm" p="lg" radius="md" withBorder key={result.id}>
+                <Image
+                  src={`${POSTER_API}${result.poster_path}`}
+                  alt={result.title}
+                  withPlaceholder
+                  fit="contain"
+                  height={400}
+                />
+
+                <Group position="apart" mt="md" mb="xs">
+                  <Text weight={500}>{result.title}</Text>
+                  <Badge color="yellow" variant="filled" size="lg">
+                    {result.vote_average}
+                  </Badge>
                 </Group>
-              </List.Item>
+
+                <Text size="sm" color="dimmed">
+                  With Fjord Tours you can explore more of the magical fjord
+                  landscapes with tours and activities on and around the fjords
+                  of Norway
+                </Text>
+
+                <Button
+                  color="green"
+                  fullWidth
+                  mt="md"
+                  radius="md"
+                  onClick={() => handleAddMovie(result.id)}
+                >
+                  Add Movie
+                </Button>
+              </Card>
             );
           })}
-        </List>
+        </SimpleGrid>
       </Modal>
-      <Button
-        size="md"
-        fullWidth
-        color="indigo"
-        onClick={() => setOpenModal(true)}
-        my="md"
-      >
-        Movie+
-      </Button>
-    </div>
+    </>
   );
 };
 

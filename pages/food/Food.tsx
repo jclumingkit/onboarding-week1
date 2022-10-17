@@ -2,12 +2,13 @@ import styles from "./Food.module.css";
 
 import { useState, useEffect, useMemo } from "react";
 
-import { Button, Space, TextInput, Group } from "@mantine/core";
+import { Button, Space, TextInput, Center } from "@mantine/core";
 
 import foodData from "../../data/foodData";
 import { FoodType } from "../../data/foodData";
 import FoodCard from "../../components/pageComponents/food/foodCard/FoodCard";
 import AddFoodModal from "../../components/pageComponents/food/addFoodModal/AddFoodModal";
+import HomeButton from "../../components/homeButton/HomeButton";
 
 const Food = () => {
   const [foodStorage, setFoodStorage] = useState<FoodType[]>([]);
@@ -61,7 +62,7 @@ const Food = () => {
           placeholder="Search food here..."
         />
         <Space h="xs" />
-        <Group spacing="sm">
+        <Center>
           <AddFoodModal
             foodStorage={foodStorage}
             setFoodStorage={setFoodStorage}
@@ -71,10 +72,12 @@ const Food = () => {
             type="button"
             color="yellow"
             onClick={() => setToggleSortButton(!toggleSortButton)}
+            mx="sm"
           >
             Rating {toggleSortButton ? "↑" : "↓"}
           </Button>
-        </Group>
+          <HomeButton />
+        </Center>
       </div>
 
       <div

@@ -1,4 +1,4 @@
-import styles from "./HomeButton.module.css";
+// import styles from "./HomeButton.module.css";
 
 import { FC } from "react";
 import { useRouter } from "next/router";
@@ -12,7 +12,7 @@ const HomeButton: FC = () => {
     <Button
       type="button"
       color="red"
-      className={styles.btnHome}
+      size="md"
       onClick={() => router.push("/")}
     >
       Home
