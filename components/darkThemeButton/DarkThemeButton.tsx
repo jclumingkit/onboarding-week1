@@ -14,6 +14,7 @@ const DarkModeButton = () => {
         className={styles.btn}
         onClick={() => toggleColorScheme()}
         size="md"
+        aria-label="Toggle Dark Mode"
       >
         {dark ? <IconSun size={30} /> : <IconMoonStars size={30} />}
       </Button>
