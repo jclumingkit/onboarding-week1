@@ -2,6 +2,8 @@ import styles from "./Food.module.css";
 
 import { useState, useEffect, useMemo } from "react";
 
+import { Button, Space, TextInput, Group } from "@mantine/core";
+
 import foodData from "../../data/foodData";
 import { FoodType } from "../../data/foodData";
 import FoodCard from "../../components/pageComponents/food/foodCard/FoodCard";
@@ -52,23 +54,29 @@ const Food = () => {
   return (
     <div className={styles.section}>
       <div className={styles.filterContainer}>
-        <AddFoodModal
-          foodStorage={foodStorage}
-          setFoodStorage={setFoodStorage}
-        />
-        <input
-          type="text"
+        <TextInput
+          size="md"
           value={searchFoodListInput}
           onChange={(e) => setSearchFoodListInput(e.target.value)}
           placeholder="Search food here..."
         />
-        <button
-          type="button"
-          onClick={() => setToggleSortButton(!toggleSortButton)}
-        >
-          Rating {toggleSortButton ? "↑" : "↓"}
-        </button>
+        <Space h="xs" />
+        <Group spacing="sm">
+          <AddFoodModal
+            foodStorage={foodStorage}
+            setFoodStorage={setFoodStorage}
+          />
+          <Button
+            size="md"
+            type="button"
+            color="yellow"
+            onClick={() => setToggleSortButton(!toggleSortButton)}
+          >
+            Rating {toggleSortButton ? "↑" : "↓"}
+          </Button>
+        </Group>
       </div>
+
       <div
         className={`${styles.cardContainer} ${
           animateCard && styles.cardAnimate
