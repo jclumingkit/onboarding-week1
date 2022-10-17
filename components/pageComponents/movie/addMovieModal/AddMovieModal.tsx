@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction, FC, useState } from "react";
 import { Modal, Button, TextInput, List, Group, Text } from "@mantine/core";
 
 import { MovieType } from "../../../../data/movieData";
+import Swal from "sweetalert2";
 
 // import Swal from "sweetalert2";
 
@@ -42,22 +43,31 @@ const AddMovieModal: FC<Props> = (props) => {
   };
 
   const handleAddMovie = (movieId: number) => {
-    const match = searchResults?.find((movie) => movie.id === movieId);
-    if (match !== undefined) {
-      const newMovie: MovieType = {
-        id: match.id,
-        imdb_id: match.imdb_id,
-        title: match.title,
-        genres: match.genres,
-        rating: match.vote_average,
-        posterPath: `${POSTER_API}${match?.poster_path}`,
-        description: match.overview,
-      };
-      const newMovieStorage = [...movieStorage, ...[newMovie]];
-      setMovieStorage(newMovieStorage);
+    const isDuplicate = movieStorage.some((movie) => movie.id === movieId);
+    if (!isDuplicate) {
+      const match = searchResults?.find((movie) => movie.id === movieId);
+      if (match !== undefined) {
+        const newMovie: MovieType = {
+          id: match.id,
+          imdb_id: match.imdb_id,
+          title: match.title,
+          genres: match.genres,
+          rating: match.vote_average,
+          posterPath: `${POSTER_API}${match?.poster_path}`,
+          description: match.overview,
+        };
+        const newMovieStorage = [...movieStorage, ...[newMovie]];
+        setMovieStorage(newMovieStorage);
+      }
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "This movie is already added to the list.",
+      });
     }
   };
-  console.log(movieStorage);
+
   return (
     <div>
       <Modal
