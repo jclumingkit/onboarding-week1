@@ -1,19 +1,21 @@
 import styles from "./HomeButton.module.css";
-import { useRouter } from "next/router";
 
 import { FC } from "react";
+import { useRouter } from "next/router";
+
+import { Button } from "@mantine/core";
 
 const HomeButton: FC = () => {
   const router = useRouter();
 
   return (
-    <button
+    <Button
       type="button"
       className={styles.btnHome}
       onClick={() => router.push("/")}
     >
-      Return Home
-    </button>
+      Home
+    </Button>
   );
 };
 
