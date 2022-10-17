@@ -4,8 +4,6 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 
-import DarkThemeButton from "../components/darkThemeButton/DarkThemeButton";
-
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>
@@ -29,9 +27,7 @@ const Home: NextPage = () => {
           </li>
         </ul>
       </main>
-      <footer>
-        <DarkThemeButton />
-      </footer>
+      <footer></footer>
     </div>
   );
 };

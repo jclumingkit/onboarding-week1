@@ -1,8 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 
-import HomeButton from "../../components/homeButton/HomeButton";
-import DarkThemeButton from "../../components/darkThemeButton/DarkThemeButton";
 import { MovieType } from "../../data/movieData";
 import favMovieIds from "../../data/movieData";
 import Movie from "./Movie";
@@ -52,10 +50,7 @@ const MoviePage: NextPage<{ movieList: MovieType[] }> = ({ movieList }) => {
       <main>
         <Movie movieList={movieList} />
       </main>
-      <footer>
-        <HomeButton />
-        <DarkThemeButton />
-      </footer>
+      <footer></footer>
     </div>
   );
 };
