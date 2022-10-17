@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import DarkThemeButton from "../../components/DarkThemeButton/DarkThemeButton";
+import DarkThemeButton from "../../components/darkThemeButton/DarkThemeButton";
 
 import Food from "./Food";
 
