@@ -22,7 +22,7 @@ const MovieCard: FC<{ movieItem: MovieType }> = ({ movieItem }) => {
       ref={ref}
     >
       <Card.Section onClick={handleRouteToIMDB}>
-        <Tooltip label="See Movie">
+        <Tooltip label="See Movie" color="red">
           <Image
             src={movieItem.posterPath}
             alt={movieItem.title}
