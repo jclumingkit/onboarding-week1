@@ -5,7 +5,7 @@ import { MovieType } from "../../data/movieData";
 import favMovieIds from "../../data/movieData";
 import Movie from "./Movie";
 
-import DarkThemeButton from "../../components/DarkThemeButton/DarkThemeButton";
+import DarkThemeButton from "../../components/darkThemeButton/DarkThemeButton";
 
 const MOVIE_API = process.env.MOVIE_API || "";
 const API_KEY = process.env.API_KEY || "";
