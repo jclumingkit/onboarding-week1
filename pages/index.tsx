@@ -3,6 +3,7 @@ import styles from "../styles/Home.module.css";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import DarkModeButton from "../components/darkThemeButton/DarkThemeButton";
 
 const Home: NextPage = () => {
   return (
@@ -27,7 +28,9 @@ const Home: NextPage = () => {
           </li>
         </ul>
       </main>
-      <footer></footer>
+      <footer>
+        <DarkModeButton />
+      </footer>
     </div>
   );
 };
