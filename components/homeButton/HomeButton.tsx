@@ -11,6 +11,7 @@ const HomeButton: FC = () => {
   return (
     <Button
       type="button"
+      color="red"
       className={styles.btnHome}
       onClick={() => router.push("/")}
     >
