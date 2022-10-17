@@ -40,6 +40,8 @@ const FoodCard: FC<{ foodItem: FoodType }> = ({ foodItem }) => {
             height={400}
             alt={foodItem?.name}
             onClick={() => setShowFullImage(!showFullImage)}
+            blurDataURL="data:..."
+            placeholder="blur"
           />
           <h2>{foodItem?.name}</h2>
           <p>

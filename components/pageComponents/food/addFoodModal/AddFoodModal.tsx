@@ -187,8 +187,8 @@ const AddFoodModal: FC<Props> = (props) => {
           </Button>
         </form>
       </Modal>
-      <Button fullWidth color="indigo" onClick={() => setOpenModal(true)}>
-        Add Food
+      <Button size="md" color="indigo" onClick={() => setOpenModal(true)}>
+        Food+
       </Button>
     </div>
   );

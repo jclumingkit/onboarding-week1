@@ -34,24 +34,4 @@
 .filterContainer {
   width: 320px;
   margin: auto;
-  display: flex;
-  justify-content: center;
-  isolation: isolate;
-}
-
-.filterContainer input {
-  padding: 5px;
-  margin-right: 5px;
-  border-radius: 5px;
-}
-
-.filterContainer button {
-  padding: 5px;
-  border-radius: 5px;
-  background-color: gold;
-  font-size: 16px;
-}
-
-.filterContainer button:hover {
-  background-color: yellow;
 }
