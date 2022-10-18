@@ -14,3 +14,11 @@ export function handleSortByRating(
 
   return sortedResults;
 }
+
+export function handleSearchByName(query: string, [...foodStorage]) {
+  const searchResults = [...foodStorage].filter((foodItem) =>
+    foodItem.name.toLowerCase().includes(query.toLowerCase())
+  );
+
+  return searchResults;
+}

@@ -12,7 +12,7 @@ import HomeButton from "../../components/homeButton/HomeButton";
 import FoodSortButton from "../../components/pageComponents/food/foodSortButton/FoodSortButton";
 
 // functions
-import { handleSortByRating } from "../../functions/food";
+import { handleSortByRating, handleSearchByName } from "../../functions/food";
 
 const Food = () => {
   const [foodStorage, setFoodStorage] = useState<FoodType[]>([]);
@@ -25,14 +25,6 @@ const Food = () => {
     localStorage.setItem("foodData", JSON.stringify(foodData));
     setFoodStorage(JSON.parse(localStorage.foodData));
   }, [setFoodStorage]);
-
-  const handleSearchByName = (query: string, [...foodStorage]) => {
-    const searchResults = [...foodStorage].filter((foodItem) =>
-      foodItem.name.toLowerCase().includes(query.toLowerCase())
-    );
-
-    return searchResults;
-  };
 
   const foodList = useMemo(() => {
     const searchResults = handleSearchByName(searchFoodListInput, foodStorage);
