@@ -2,13 +2,17 @@ import styles from "./Food.module.css";
 
 import { useState, useEffect, useMemo } from "react";
 
-import { Button, Space, TextInput, Center } from "@mantine/core";
+import { Space, TextInput, Center } from "@mantine/core";
 
 import foodData from "../../data/foodData";
 import { FoodType } from "../../data/foodData";
 import FoodCard from "../../components/pageComponents/food/foodCard/FoodCard";
 import AddFoodModal from "../../components/pageComponents/food/addFoodModal/AddFoodModal";
 import HomeButton from "../../components/homeButton/HomeButton";
+import FoodSortButton from "../../components/pageComponents/food/foodSortButton/FoodSortButton";
+
+// functions
+import { handleSortByRating, handleSearchByName } from "../../functions/food";
 
 const Food = () => {
   const [foodStorage, setFoodStorage] = useState<FoodType[]>([]);
@@ -21,29 +25,6 @@ const Food = () => {
     localStorage.setItem("foodData", JSON.stringify(foodData));
     setFoodStorage(JSON.parse(localStorage.foodData));
   }, [setFoodStorage]);
-
-  const handleSearchByName = (query: string, [...foodStorage]) => {
-    const searchResults = [...foodStorage].filter((foodItem) =>
-      foodItem.name.toLowerCase().includes(query.toLowerCase())
-    );
-
-    return searchResults;
-  };
-
-  const handleSortByRating = (
-    currentFoodList: FoodType[],
-    toggleSortButton: boolean
-  ) => {
-    const sortedResults = currentFoodList.sort((foodItemA, foodItemB) => {
-      if (!toggleSortButton) {
-        return foodItemB.rating - foodItemA.rating;
-      } else {
-        return foodItemA.rating - foodItemB.rating;
-      }
-    });
-
-    return sortedResults;
-  };
 
   const foodList = useMemo(() => {
     const searchResults = handleSearchByName(searchFoodListInput, foodStorage);
@@ -67,15 +48,10 @@ const Food = () => {
             foodStorage={foodStorage}
             setFoodStorage={setFoodStorage}
           />
-          <Button
-            size="md"
-            type="button"
-            color="yellow"
-            onClick={() => setToggleSortButton(!toggleSortButton)}
-            mx="sm"
-          >
-            Rating {toggleSortButton ? "↑" : "↓"}
-          </Button>
+          <FoodSortButton
+            toggleSortButton={toggleSortButton}
+            setToggleSortButton={setToggleSortButton}
+          />
           <HomeButton />
         </Center>
       </div>
