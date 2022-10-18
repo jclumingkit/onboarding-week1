@@ -13,12 +13,14 @@ import FoodSortButton from "../../components/pageComponents/food/foodSortButton/
 
 // functions
 import { handleSortByRating, handleSearchByName } from "../../functions/food";
+import OpenModalButton from "../../components/OpenModalButton";
 
 const Food = () => {
   const [foodStorage, setFoodStorage] = useState<FoodType[]>([]);
   const [searchFoodListInput, setSearchFoodListInput] = useState("");
   const [toggleSortButton, setToggleSortButton] = useState(false);
   const [animateCard, setAnimateCard] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     setAnimateCard(true);
@@ -44,9 +46,12 @@ const Food = () => {
         />
         <Space h="xs" />
         <Center>
+          <OpenModalButton innerText="Food+" setOpenModal={setOpenModal} />
           <AddFoodModal
             foodStorage={foodStorage}
             setFoodStorage={setFoodStorage}
+            openModal={openModal}
+            setOpenModal={setOpenModal}
           />
           <FoodSortButton
             toggleSortButton={toggleSortButton}

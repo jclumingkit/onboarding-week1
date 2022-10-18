@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, FC, useState } from "react";
+import { Dispatch, SetStateAction, FC } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import {
   Modal,
@@ -6,7 +6,6 @@ import {
   TextInput,
   Textarea,
   NumberInput,
-  Text,
   Space,
 } from "@mantine/core";
 
@@ -27,6 +26,8 @@ type FormData = {
 type Props = {
   foodStorage: FoodType[];
   setFoodStorage: Dispatch<SetStateAction<FoodType[]>>;
+  openModal: boolean;
+  setOpenModal: Dispatch<SetStateAction<boolean>>;
 };
 
 const foodSchema = yup
@@ -39,7 +40,7 @@ const foodSchema = yup
   .required();
 
 const AddFoodModal: FC<Props> = (props) => {
-  const { foodStorage, setFoodStorage } = props;
+  const { foodStorage, setFoodStorage, openModal, setOpenModal } = props;
   const {
     control,
     handleSubmit,
@@ -47,7 +48,6 @@ const AddFoodModal: FC<Props> = (props) => {
   } = useForm<FormData>({
     resolver: yupResolver(foodSchema),
   });
-  const [openModal, setOpenModal] = useState(false);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     const newFood = {
@@ -89,108 +89,101 @@ const AddFoodModal: FC<Props> = (props) => {
   };
 
   return (
-    <div>
-      <Modal
-        centered
-        size="lg"
-        opened={openModal}
-        onClose={() => setOpenModal(false)}
-        title="Share Your Food"
-      >
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Controller
-            name="foodName"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextInput
-                {...field}
-                size="md"
-                label="Food Name"
-                placeholder={
-                  errors.foodName?.type !== "required" ? "Kaldereta" : ""
-                }
-                withAsterisk
-                error={
-                  errors.foodName?.type === "required" &&
-                  "Food name is required"
-                }
-              />
-            )}
-          />
-          <Controller
-            name="foodImageURL"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <TextInput
-                {...field}
-                size="md"
-                label="Image URL"
-                placeholder={
-                  errors.foodImageURL?.type !== "required"
-                    ? "wwww.foodimages.com/kaldereta.jpg"
-                    : ""
-                }
-                withAsterisk
-                error={
-                  errors.foodImageURL?.type === "required" &&
-                  "Image URL is required"
-                }
-              />
-            )}
-          />
-          <Text color="red">{errors.foodImageURL?.message}</Text>
-          <Controller
-            name="foodDescription"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Textarea
-                {...field}
-                size="md"
-                label="Food Description"
-                placeholder={
-                  errors.foodDescription?.type !== "required"
-                    ? "Classic Filipino food made with love."
-                    : ""
-                }
-                withAsterisk
-                error={
-                  errors.foodDescription?.type === "required" &&
-                  "Description is required"
-                }
-              />
-            )}
-          />
-          <Controller
-            name="foodRating"
-            control={control}
-            defaultValue={3}
-            render={({ field }) => (
-              <NumberInput
-                {...field}
-                size="md"
-                label="Rating"
-                max={5}
-                min={0}
-                withAsterisk
-                error={
-                  errors.foodRating?.type === "required" && "Rating is required"
-                }
-              />
-            )}
-          />
-          <Space h="sm" />
-          <Button fullWidth color="indigo" type="submit">
-            Add Food
-          </Button>
-        </form>
-      </Modal>
-      <Button size="md" color="indigo" onClick={() => setOpenModal(true)}>
-        Food+
-      </Button>
-    </div>
+    <Modal
+      centered
+      size="lg"
+      opened={openModal}
+      onClose={() => setOpenModal(false)}
+      title="Share Your Food"
+    >
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Controller
+          name="foodName"
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              size="md"
+              label="Food Name"
+              placeholder={
+                errors.foodName?.type !== "required" ? "Kaldereta" : ""
+              }
+              withAsterisk
+              error={
+                errors.foodName?.type === "required" && "Food name is required"
+              }
+            />
+          )}
+        />
+        <Controller
+          name="foodImageURL"
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <TextInput
+              {...field}
+              size="md"
+              label="Image URL"
+              placeholder={
+                errors.foodImageURL?.type !== "required"
+                  ? "wwww.foodimages.com/kaldereta.jpg"
+                  : ""
+              }
+              withAsterisk
+              error={
+                errors.foodImageURL?.type === "required" &&
+                "Image URL is required"
+              }
+            />
+          )}
+        />
+        <Controller
+          name="foodDescription"
+          control={control}
+          defaultValue=""
+          render={({ field }) => (
+            <Textarea
+              {...field}
+              size="md"
+              label="Food Description"
+              placeholder={
+                errors.foodDescription?.type !== "required"
+                  ? "Classic Filipino food made with love."
+                  : ""
+              }
+              withAsterisk
+              error={
+                errors.foodDescription?.type === "required" &&
+                "Description is required"
+              }
+            />
+          )}
+        />
+        <Controller
+          name="foodRating"
+          control={control}
+          defaultValue={3}
+          render={({ field }) => (
+            <NumberInput
+              {...field}
+              size="md"
+              label="Rating"
+              max={5}
+              min={0}
+              withAsterisk
+              error={
+                errors.foodRating?.type === "required" && "Rating is required"
+              }
+            />
+          )}
+        />
+        <Space h="sm" />
+        <Button fullWidth color="indigo" type="submit">
+          Add Food
+        </Button>
+      </form>
+    </Modal>
   );
 };
 
