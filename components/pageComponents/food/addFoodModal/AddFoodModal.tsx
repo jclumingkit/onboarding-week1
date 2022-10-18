@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, FC } from "react";
-import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import {
   Modal,
   Button,
@@ -10,18 +10,14 @@ import {
 } from "@mantine/core";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 
 import { FoodType } from "../../../../data/foodData";
 
 import Swal from "sweetalert2";
-
-type FormData = {
-  foodName: string;
-  foodImageURL: string;
-  foodDescription: string;
-  foodRating: number;
-};
+import getNewFood, {
+  FormData,
+  foodSchema,
+} from "../../../../functions/food/submitFood";
 
 type Props = {
   foodStorage: FoodType[];
@@ -30,40 +26,25 @@ type Props = {
   setOpenModal: Dispatch<SetStateAction<boolean>>;
 };
 
-const foodSchema = yup
-  .object({
-    foodName: yup.string().required(),
-    foodImageURL: yup.string().url().required(),
-    foodDescription: yup.string().required(),
-    foodRating: yup.number().positive().integer().required(),
-  })
-  .required();
-
 const AddFoodModal: FC<Props> = (props) => {
   const { foodStorage, setFoodStorage, openModal, setOpenModal } = props;
   const {
     control,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<FormData>({
     resolver: yupResolver(foodSchema),
   });
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    const newFood = {
-      id: foodStorage.length,
-      name: data.foodName,
-      description: data.foodDescription,
-      image: data.foodImageURL,
-      rating: data.foodRating,
-    };
-
-    const isValid = await checkIsImageValid(newFood.image);
-
-    if (isValid === 200) {
+  const addFoodItem = async () => {
+    const formData: FormData = getValues();
+    const newFood = await getNewFood(formData, foodStorage.length);
+    if (newFood !== undefined) {
       const newFoodStorage: FoodType[] = [...foodStorage, ...[newFood]];
       setFoodStorage(newFoodStorage);
       setOpenModal(false);
+      console.log(newFood);
       Swal.fire({
         icon: "success",
         title: "Success!",
@@ -78,16 +59,6 @@ const AddFoodModal: FC<Props> = (props) => {
     }
   };
 
-  const checkIsImageValid = async (url: string) => {
-    try {
-      const res = await fetch(url);
-      const status = res.status;
-      return status;
-    } catch (err) {
-      return err;
-    }
-  };
-
   return (
     <Modal
       centered
@@ -96,7 +67,7 @@ const AddFoodModal: FC<Props> = (props) => {
       onClose={() => setOpenModal(false)}
       title="Share Your Food"
     >
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(addFoodItem)}>
         <Controller
           name="foodName"
           control={control}

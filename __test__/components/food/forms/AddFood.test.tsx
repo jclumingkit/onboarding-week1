@@ -2,16 +2,14 @@ import "@testing-library/jest-dom";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import AddFoodModal from "../../../../components/pageComponents/food/addFoodModal/AddFoodModal";
-import { FoodType } from "../../../../data/foodData";
 
-const mockFoodStorage: FoodType[] = [];
 const mockSetFoodStorage = jest.fn();
 
 describe("AddFood", () => {
   beforeEach(() => {
     render(
       <AddFoodModal
-        foodStorage={mockFoodStorage}
+        foodStorage={[]}
         setFoodStorage={mockSetFoodStorage}
         openModal={true}
         setOpenModal={jest.fn()}
@@ -19,7 +17,7 @@ describe("AddFood", () => {
     );
   });
 
-  it("check validation of input values are empty", async () => {
+  it("check validation with empty inputs", async () => {
     const submitBtn = screen.getByRole("button", { name: "Add Food" });
     await act(async () => {
       fireEvent.submit(submitBtn);
