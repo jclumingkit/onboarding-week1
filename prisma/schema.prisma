@@ -16,7 +16,7 @@ model Food {
   description String
   image String
   rating Int
-  isPublic Boolean
+  isPublic Boolean @default(true)
   createdAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }
