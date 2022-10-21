@@ -7,20 +7,18 @@ import { Space, TextInput, Center } from "@mantine/core";
 import foodData from "../../data/foodData";
 import { FoodType } from "../../data/foodData";
 import FoodCard from "../../components/pageComponents/food/foodCard/FoodCard";
-import AddFoodModal from "../../components/pageComponents/food/addFoodModal/AddFoodModal";
 import HomeButton from "../../components/homeButton/HomeButton";
 import FoodSortButton from "../../components/pageComponents/food/foodSortButton/FoodSortButton";
+import CenteredModal from "../../components/CenteredModal";
+import FoodForm from "../../components/pageComponents/food/FoodForm";
 
-// functions
 import { handleSortByRating, handleSearchByName } from "../../functions/food";
-import OpenModalButton from "../../components/OpenModalButton";
 
 const Food = () => {
   const [foodStorage, setFoodStorage] = useState<FoodType[]>([]);
   const [searchFoodListInput, setSearchFoodListInput] = useState("");
   const [toggleSortButton, setToggleSortButton] = useState(false);
   const [animateCard, setAnimateCard] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     setAnimateCard(true);
@@ -46,13 +44,7 @@ const Food = () => {
         />
         <Space h="xs" />
         <Center>
-          <OpenModalButton innerText="Food+" setOpenModal={setOpenModal} />
-          <AddFoodModal
-            foodStorage={foodStorage}
-            setFoodStorage={setFoodStorage}
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-          />
+          <CenteredModal childComponent={<FoodForm />} buttonText={"Food+"} />
           <FoodSortButton
             toggleSortButton={toggleSortButton}
             setToggleSortButton={setToggleSortButton}
