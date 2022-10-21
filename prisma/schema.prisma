@@ -1,8 +1,6 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -11,12 +9,12 @@ datasource db {
 }
 
 model Food {
-  id String @id @default(uuid())
-  name String
+  id          String   @id @default(uuid())
+  name        String
   description String
-  image String
-  rating Int
-  isPublic Boolean @default(true)
-  createdAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  image       String
+  rating      Int
+  isPublic    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updateAt    DateTime @updatedAt
 }
