@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Center, Container } from "@mantine/core";
+import { Container, Stack, Text } from "@mantine/core";
 import { Food } from "../../types/TFood";
 import supabaseClient from "../../utils/supabase";
 
@@ -23,9 +23,12 @@ const Kitchen: NextPage<Props> = ({ foodList }) => {
       </Head>
 
       <main>
-        <Center style={{ height: "100vh" }}>
+        <Stack mt="xl" align="center" style={{ height: "100vh" }}>
+          <Text size="xl" weight={700}>
+            Kitchen
+          </Text>
           <Dashboard foodList={foodList} />
-        </Center>
+        </Stack>
       </main>
       <footer></footer>
     </Container>
