@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import { showNotification } from "@mantine/notifications";
 
 const NavMenu: NextPage = () => {
   const session = useSession();
@@ -27,6 +28,11 @@ const NavMenu: NextPage = () => {
     console.log(error);
 
     router.push("/user/signin");
+    showNotification({
+      title: `You have been logged out.`,
+      message: "Login again to resume your session.",
+      color: "yellow",
+    });
   };
 
   return (
