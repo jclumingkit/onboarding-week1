@@ -6,11 +6,11 @@ import { Space, TextInput, Center } from "@mantine/core";
 
 import foodData from "../../data/foodData";
 import { FoodType } from "../../data/foodData";
-import FoodCard from "../../components/pageComponents/food/foodCard/FoodCard";
+import FoodCard from "../../components/food/foodCard/FoodCard";
 import HomeButton from "../../components/homeButton/HomeButton";
-import FoodSortButton from "../../components/pageComponents/food/foodSortButton/FoodSortButton";
+import FoodSortButton from "../../components/food/foodSortButton/FoodSortButton";
 import CenteredModal from "../../components/CenteredModal";
-import FoodForm from "../../components/pageComponents/food/FoodForm";
+import FoodForm from "../../components/food/FoodForm";
 
 import { handleSortByRating, handleSearchByName } from "../../functions/food";
 

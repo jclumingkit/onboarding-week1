@@ -5,10 +5,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  if (req.method === "POST") {
-    const foodData = req.body;
-    const { data, error } = await supabaseClient.from("food").insert(foodData);
-    console.log(data);
+  if (req.method === "GET") {
+    const { data, error } = await supabaseClient
+      .from("food")
+      .select("*")
+      .eq("is_public", true);
     console.log(error);
     res.status(200).json(data);
   } else {

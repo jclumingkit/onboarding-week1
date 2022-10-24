@@ -3,8 +3,8 @@ import { NextPage } from "next";
 import { Container, SimpleGrid } from "@mantine/core";
 
 import { MovieType } from "../../data/movieData";
-import AddMovieModal from "../../components/pageComponents/movie/addMovieModal/AddMovieModal";
-import MovieCard from "../../components/pageComponents/movie/movieCard/MovieCard";
+import AddMovieModal from "../../components/movie/addMovieModal/AddMovieModal";
+import MovieCard from "../../components/movie/movieCard/MovieCard";
 
 const Movie: NextPage<{ movieList: MovieType[] }> = ({ movieList }) => {
   const [movieStorage, setMovieStorage] = useState(movieList);

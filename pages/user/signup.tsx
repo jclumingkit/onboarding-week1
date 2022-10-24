@@ -1,13 +1,13 @@
+import { Container } from "@mantine/core";
 import type { NextPage } from "next";
 import Head from "next/head";
+import SignUpPage from "../../components/user/SignUpPage";
 
-import Food from "./Food";
-
-const FoodPage: NextPage = () => {
+const SignUp: NextPage = () => {
   return (
-    <div>
+    <Container>
       <Head>
-        <title>Day 1 Project</title>
+        <title>Sign Up</title>
         <meta
           name="description"
           content="Projects done during SCIC onboarding week 1."
@@ -16,10 +16,11 @@ const FoodPage: NextPage = () => {
       </Head>
 
       <main>
-        <Food />
+        <SignUpPage />
       </main>
-    </div>
+      <footer></footer>
+    </Container>
   );
 };
 
-export default FoodPage;
+export default SignUp;

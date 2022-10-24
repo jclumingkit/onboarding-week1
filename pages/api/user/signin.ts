@@ -6,11 +6,14 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const foodData = req.body;
-    const { data, error } = await supabaseClient.from("food").insert(foodData);
-    console.log(data);
+    const { email, password } = req.body;
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
     console.log(error);
-    res.status(200).json(data);
+    console.log(data);
+    res.send(data);
   } else {
     res.setHeader("Allow", ["POST"]);
     res
