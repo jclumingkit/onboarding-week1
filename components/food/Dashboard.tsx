@@ -8,14 +8,7 @@ const Dashboard: FC<{ foodList: Food[] }> = ({ foodList }) => {
     <SimpleGrid cols={3}>
       {foodList.map((foodItem) => {
         return (
-          <Card
-            style={{ width: "200px" }}
-            key={foodItem.id}
-            shadow="sm"
-            p="lg"
-            radius="md"
-            withBorder
-          >
+          <Card key={foodItem.id} shadow="sm" p="lg" radius="md" withBorder>
             <Card.Section>
               <Image src={foodItem.image} height={160} alt={foodItem.name} />
             </Card.Section>
