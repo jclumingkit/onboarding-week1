@@ -11,13 +11,13 @@ import {
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { FoodType } from "../../../../data/foodData";
+import { FoodType } from "../../data/foodData";
 
 import Swal from "sweetalert2";
 import getNewFood, {
   FormData,
   foodSchema,
-} from "../../../../functions/food/submitFood";
+} from "../../functions/food/submitFood";
 
 type Props = {
   foodStorage: FoodType[];

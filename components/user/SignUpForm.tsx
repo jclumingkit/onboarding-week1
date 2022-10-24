@@ -4,7 +4,7 @@ import { useForm } from "@mantine/form";
 import { Group, TextInput, PasswordInput, Button } from "@mantine/core";
 import { showNotification, updateNotification } from "@mantine/notifications";
 import { useRouter } from "next/router";
-import { IconCheck } from "@tabler/icons";
+import { IconX, IconCheck } from "@tabler/icons";
 
 type FormData = {
   email: string;
@@ -36,8 +36,8 @@ const SignUpForm: FC = () => {
       color: "green",
       loading: true,
     });
-    const { request } = await axios.post("/api/user/signup", values);
-    if (request.status === 200) {
+    const { data } = await axios.post("/api/user/signup", values);
+    if (data.user !== null) {
       updateNotification({
         id: "sign-up-form-loader",
         title: `Sign up successful.`,
@@ -46,14 +46,19 @@ const SignUpForm: FC = () => {
         loading: false,
         icon: <IconCheck size={16} />,
       });
+      console.log(data);
       setIsLoading(false);
       router.push("/user/signin");
     } else {
-      showNotification({
-        title: `Someting went wrong.`,
+      updateNotification({
+        id: "sign-up-form-loader",
+        title: `Something went wrong.`,
         message: "Please try again later.",
         color: "red",
+        loading: false,
+        icon: <IconX size={16} />,
       });
+      setIsLoading(false);
     }
   };
 

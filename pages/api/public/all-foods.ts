@@ -1,14 +1,17 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { supabaseClient } from "../../../utils/supabase";
+import supabaseClient from "../../../utils/supabase";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method === "GET") {
-    const data = await supabaseClient.from("auth.users").select("*");
-    console.log(res);
-    res.send(data);
+    const { data, error } = await supabaseClient
+      .from("food")
+      .select("*")
+      .eq("is_public", true);
+    console.log(error);
+    res.status(200).json(data);
   } else {
     res.setHeader("Allow", ["POST"]);
     res

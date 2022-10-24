@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import DarkThemeButton from "../../components/darkThemeButton/DarkThemeButton";
 
 import Food from "./Food";
 
@@ -19,9 +18,6 @@ const FoodPage: NextPage = () => {
       <main>
         <Food />
       </main>
-      <footer>
-        <DarkThemeButton />
-      </footer>
     </div>
   );
 };

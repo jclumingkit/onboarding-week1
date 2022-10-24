@@ -1,8 +1,9 @@
 import { FC, useState } from "react";
-import axios from "axios";
+import { useRouter } from "next/router";
 import { useForm } from "@mantine/form";
 import { Group, TextInput, PasswordInput, Button } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 
 type FormData = {
   email: string;
@@ -10,6 +11,8 @@ type FormData = {
 };
 
 const SignInForm: FC = () => {
+  const supabase = useSupabaseClient();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm({
     initialValues: {
@@ -21,19 +24,14 @@ const SignInForm: FC = () => {
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
     },
   });
-
   const addUser = async (values: FormData) => {
     setIsLoading(true);
-    const { data, request } = await axios.post("/api/user/signin", values);
-    if (request.status === 200) {
-      console.log(data.user);
+    const { data } = await supabase.auth.signInWithPassword(values);
+    if (data.user !== null) {
       setIsLoading(false);
-      showNotification({
-        title: `You are now registered!`,
-        message: "Please check your email for the confirmation link.",
-        color: "green",
-      });
+      router.push("/user/profile");
     } else {
+      setIsLoading(false);
       showNotification({
         title: `Someting went wrong.`,
         message: "Please try again later.",

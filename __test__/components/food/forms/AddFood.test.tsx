@@ -1,7 +1,7 @@
 import "@testing-library/jest-dom";
 import { render, fireEvent, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
-import AddFoodModal from "../../../../components/pageComponents/food/addFoodModal/AddFoodModal";
+import AddFoodModal from "../../../../components/food/AddFoodModal";
 
 const mockSetFoodStorage = jest.fn();
 

@@ -10,6 +10,7 @@ datasource db {
 
 model Food {
   id          String   @id @default(uuid())
+  user_id     String
   name        String
   description String
   image       String

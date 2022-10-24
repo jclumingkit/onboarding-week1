@@ -14,6 +14,7 @@ import {
   NativeSelect,
 } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
+import { User } from "@supabase/supabase-js";
 
 type FormData = {
   foodName: string;
@@ -33,7 +34,7 @@ const foodSchema = yup
   })
   .required();
 
-const FoodForm: FC = () => {
+const FoodForm: FC<{ user: User | null }> = ({ user }) => {
   const {
     control,
     handleSubmit,
@@ -62,10 +63,11 @@ const FoodForm: FC = () => {
 
     const newFood = {
       name: data.foodName,
+      user_id: user?.id,
       image: data.foodImageURL,
       description: data.foodDescription,
       rating: data.foodRating,
-      isPublic: isPublic,
+      is_public: isPublic,
     };
 
     try {
@@ -74,12 +76,13 @@ const FoodForm: FC = () => {
         const response = await axios.post("/api/food/post", newFood);
         if (response.status === 200) {
           setIsLoading(false);
+
           reset({
             foodName: "",
             foodImageURL: "",
             foodDescription: "",
             foodRating: 3,
-            foodPrivacy: "",
+            foodPrivacy: "public",
           });
           showNotification({
             title: `Food saved!`,
@@ -94,6 +97,7 @@ const FoodForm: FC = () => {
           });
         }
       } else {
+        setIsLoading(false);
         showNotification({
           title: `Invalid Image`,
           message: "Your image url is invalid.",

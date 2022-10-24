@@ -1,8 +1,8 @@
-import { NextPage } from "next";
+import { FC } from "react";
 import { Container, Center, Stack, Text } from "@mantine/core";
 import SignInForm from "./SignInForm";
 
-const SignInPage: NextPage = () => {
+const SignInPage: FC = () => {
   return (
     <Container style={{ height: "100vh" }}>
       <Center style={{ height: "inherit" }}>

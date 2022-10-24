@@ -11,10 +11,10 @@ import {
   Badge,
 } from "@mantine/core";
 
-import { MovieType } from "../../../../data/movieData";
+import { MovieType } from "../../../data/movieData";
 import Swal from "sweetalert2";
 
-import HomeButton from "../../../homeButton/HomeButton";
+import HomeButton from "../../homeButton/HomeButton";
 
 const MOVIE_API = process.env.MOVIE_API || "";
 const API_KEY = process.env.API_KEY || "";
