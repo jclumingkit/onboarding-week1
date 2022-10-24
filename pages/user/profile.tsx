@@ -12,7 +12,7 @@ type Props = {
 };
 
 const Profile: NextPage<Props> = ({ user, foodList }) => {
-  console.log(foodList);
+  console.log(user);
   return (
     <Container>
       <Head>
