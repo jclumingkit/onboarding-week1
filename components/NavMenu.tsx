@@ -55,6 +55,7 @@ const NavMenu: NextPage = () => {
         }}
       >
         <Burger
+          id="btn-burger"
           p="sm"
           opened={opened}
           onClick={() => setOpened((opened) => !opened)}

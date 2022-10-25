@@ -8,7 +8,7 @@ import foodData from "../../data/foodData";
 import { FoodType } from "../../data/foodData";
 import FoodCard from "../../components/food/foodCard/FoodCard";
 import HomeButton from "../../components/homeButton/HomeButton";
-import FoodSortButton from "../../components/food/foodSortButton/FoodSortButton";
+import FoodSortButton from "../../components/food/FoodSortButton";
 import CenteredModal from "../../components/CenteredModal";
 import FoodForm from "../../components/food/FoodForm";
 
@@ -44,7 +44,10 @@ const Food = () => {
         />
         <Space h="xs" />
         <Center>
-          <CenteredModal childComponent={<FoodForm />} buttonText={"Food+"} />
+          <CenteredModal
+            childComponent={<FoodForm user={null} />}
+            buttonText={"Food+"}
+          />
           <FoodSortButton
             toggleSortButton={toggleSortButton}
             setToggleSortButton={setToggleSortButton}

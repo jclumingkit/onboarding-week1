@@ -43,6 +43,7 @@ const SignInForm: FC = () => {
   return (
     <form onSubmit={form.onSubmit(addUser)}>
       <TextInput
+        type="email"
         label="Email"
         placeholder="your@email.com"
         size="md"
@@ -63,7 +64,7 @@ const SignInForm: FC = () => {
       />
 
       <Group position="right" mt="md">
-        <Button type="submit" size="md" disabled={isLoading}>
+        <Button id="btn-signin" type="submit" size="md" disabled={isLoading}>
           Sign In
         </Button>
       </Group>
