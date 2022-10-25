@@ -45,7 +45,6 @@ export const getServerSideProps = withPageAuth({
       .from("food")
       .select("*")
       .eq("user_id", userId);
-    console.log(data);
     return { props: { user: user, foodList: data } };
   },
 });

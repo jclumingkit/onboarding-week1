@@ -37,7 +37,7 @@ const SignInPage: FC = () => {
         </Stack>
         <Stack style={{ display: showForm ? "block" : "none" }}>
           <Text size="xl" weight={700}>
-            Sign In with Magic Link
+            Magic Link
           </Text>
           <MagicLinkForm />
         </Stack>
