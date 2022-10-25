@@ -9,9 +9,10 @@ import { Food } from "../../types/TFood";
 type Props = {
   user: User;
   foodList: Food[];
+  avatarUrl: string;
 };
 
-const Profile: NextPage<Props> = ({ user, foodList }) => {
+const Profile: NextPage<Props> = ({ user, foodList, avatarUrl }) => {
   return (
     <Container>
       <Head>
@@ -24,7 +25,7 @@ const Profile: NextPage<Props> = ({ user, foodList }) => {
       </Head>
 
       <main>
-        <ProfilePage foodList={foodList} user={user} />
+        <ProfilePage user={user} foodList={foodList} avatarUrl={avatarUrl} />
       </main>
       <footer></footer>
     </Container>
@@ -41,10 +42,13 @@ export const getServerSideProps = withPageAuth({
     } = await supabase.auth.getUser();
 
     const userId = user?.id;
-    const { data } = await supabase
+    const { data: foodList } = await supabase
       .from("food")
       .select("*")
       .eq("user_id", userId);
-    return { props: { user: user, foodList: data } };
+    const { data } = supabase.storage.from("avatar").getPublicUrl(`${userId}`);
+    return {
+      props: { user: user, foodList: foodList, avatarUrl: data.publicUrl },
+    };
   },
 });
