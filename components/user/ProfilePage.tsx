@@ -37,7 +37,7 @@ const ProfilePage: FC<Props> = ({ user, foodList, userProfile }) => {
       const avatarFile = avatar;
 
       new Compressor(avatarFile, {
-        quality: 0.8,
+        quality: 0.6,
         mimeType: "image/jpeg",
         success: async (compressedResult) => {
           const { data } = await supabaseClient.functions.invoke(
