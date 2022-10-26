@@ -7,10 +7,11 @@ import Dashboard from "../food/Dashboard";
 
 import { Food } from "../../types/TFood";
 import { User } from "@supabase/supabase-js";
-import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { showNotification } from "@mantine/notifications";
 
 import Compressor from "compressorjs";
+import supabaseClient from "../../utils/supabase";
+import axios from "axios";
 
 type Props = {
   user: User;
@@ -21,9 +22,11 @@ type Props = {
 const ProfilePage: FC<Props> = ({ user, foodList, avatarUrl }) => {
   const [opened, setOpened] = useState(false);
   const [avatar, setAvatar] = useState<File | null>(null);
-  const supabase = useSupabaseClient();
+  const [uploading, setUploading] = useState(false);
 
   const handleAvatarUpload = async () => {
+    setUploading(true);
+
     if (avatar !== null) {
       const avatarFile = avatar;
 
@@ -31,29 +34,31 @@ const ProfilePage: FC<Props> = ({ user, foodList, avatarUrl }) => {
         quality: 0.8,
         mimeType: "image/jpeg",
         success: async (compressedResult) => {
-          const { error } = await supabase.storage
-            .from("avatar")
-            .upload(user.id, compressedResult);
-
-          if (error?.message.includes("duplicate")) {
-            const { error } = await supabase.storage
-              .from("avatar")
-              .update(user.id, compressedResult);
-
-            error === null
-              ? showNotification({
-                  title: `Image uploaded.`,
-                  message: "Your avatar has been updated.",
-                  color: "green",
-                })
-              : showNotification({
-                  title: `Something went wrong.`,
-                  message: "Please try again later.",
-                  color: "red",
-                });
-          }
+          const { data } = await supabaseClient.functions.invoke(
+            "imageUploader",
+            {
+              body: compressedResult,
+            }
+          );
+          const error = await axios.post("/api/user/profile-update", {
+            newAvatarId: data.path,
+            userId: user.id,
+          });
+          error === null
+            ? showNotification({
+                title: `Photo uploaded.`,
+                message: "Your new avatar has been saved.",
+                color: "green",
+              })
+            : showNotification({
+                title: `There was a problem uploading your photo.`,
+                message: "Please try again later.",
+                color: "red",
+              });
         },
       });
+
+      setUploading(false);
     }
   };
 
@@ -83,8 +88,13 @@ const ProfilePage: FC<Props> = ({ user, foodList, avatarUrl }) => {
           onChange={setAvatar}
           accept="image/*"
         />
-        <Button type="submit" mt="sm" onClick={() => handleAvatarUpload()}>
-          Upload
+        <Button
+          type="submit"
+          mt="sm"
+          onClick={() => handleAvatarUpload()}
+          disabled={uploading}
+        >
+          {uploading ? "Uploading" : "Upload"}
         </Button>
       </Modal>
       <Text>{user?.email}</Text>
