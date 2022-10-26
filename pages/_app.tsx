@@ -9,9 +9,14 @@ import {
 import { NotificationsProvider } from "@mantine/notifications";
 
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
-import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
+import {
+  SessionContextProvider,
+  Session,
+  useUser,
+} from "@supabase/auth-helpers-react";
 
 import NavMenu from "../components/NavMenu";
+import { useRouter } from "next/router";
 
 function MyApp({
   Component,
@@ -22,6 +27,7 @@ function MyApp({
     setColorScheme(value || (colorScheme === "dark" ? "light" : "dark"));
 
   const [supabaseClient] = useState(() => createBrowserSupabaseClient());
+  const router = useRouter();
 
   return (
     <SessionContextProvider
@@ -39,13 +45,30 @@ function MyApp({
         >
           <NotificationsProvider>
             <AppShell header={<NavMenu />}>
-              <Component {...pageProps} />
+              {router.pathname.includes("/sign") ? (
+                <AuthProvider>
+                  <Component {...pageProps} />
+                </AuthProvider>
+              ) : (
+                <Component {...pageProps} />
+              )}
             </AppShell>
           </NotificationsProvider>
         </MantineProvider>
       </ColorSchemeProvider>
     </SessionContextProvider>
   );
+}
+
+function AuthProvider({ children }: { children: JSX.Element }) {
+  const user = useUser();
+  const router = useRouter();
+  if (user !== null) {
+    router.push("/user/profile");
+    return null;
+  }
+
+  return children;
 }
 
 export default MyApp;

@@ -5,14 +5,15 @@ import ProfilePage from "../../components/user/ProfilePage";
 import { User } from "@supabase/supabase-js";
 import { withPageAuth } from "@supabase/auth-helpers-nextjs";
 import { Food } from "../../types/TFood";
+import { UserProfile } from "../../types/TUser";
 
 type Props = {
   user: User;
   foodList: Food[];
-  avatarUrl: string;
+  userProfile: UserProfile;
 };
 
-const Profile: NextPage<Props> = ({ user, foodList, avatarUrl }) => {
+const Profile: NextPage<Props> = ({ user, foodList, userProfile }) => {
   return (
     <Container>
       <Head>
@@ -25,7 +26,11 @@ const Profile: NextPage<Props> = ({ user, foodList, avatarUrl }) => {
       </Head>
 
       <main>
-        <ProfilePage user={user} foodList={foodList} avatarUrl={avatarUrl} />
+        <ProfilePage
+          user={user}
+          foodList={foodList}
+          userProfile={userProfile}
+        />
       </main>
       <footer></footer>
     </Container>
@@ -46,9 +51,14 @@ export const getServerSideProps = withPageAuth({
       .from("food")
       .select("*")
       .eq("user_id", userId);
-    const { data } = supabase.storage.from("avatar").getPublicUrl(`${userId}`);
+    const { data: userProfile } = await supabase
+      .from("user_profiles")
+      .select("*")
+      .eq("id", userId)
+      .limit(1)
+      .single();
     return {
-      props: { user: user, foodList: foodList, avatarUrl: data.publicUrl },
+      props: { user: user, foodList: foodList, userProfile: userProfile },
     };
   },
 });

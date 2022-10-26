@@ -68,6 +68,7 @@ const FoodForm: FC<{ user: User | null }> = ({ user }) => {
       description: data.foodDescription,
       rating: data.foodRating,
       is_public: isPublic,
+      is_active: true,
     };
 
     try {
