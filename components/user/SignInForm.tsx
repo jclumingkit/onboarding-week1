@@ -33,8 +33,8 @@ const SignInForm: FC = () => {
     } else {
       setIsLoading(false);
       showNotification({
-        title: `Someting went wrong.`,
-        message: "Please try again later.",
+        title: `Login details incorrect.`,
+        message: "Please review your login details.",
         color: "red",
       });
     }

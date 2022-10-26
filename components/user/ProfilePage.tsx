@@ -7,6 +7,8 @@ import Dashboard from "../food/Dashboard";
 
 import { Food } from "../../types/TFood";
 import { User } from "@supabase/supabase-js";
+import { UserProfile } from "../../types/TUser";
+
 import { showNotification } from "@mantine/notifications";
 
 import Compressor from "compressorjs";
@@ -16,13 +18,17 @@ import axios from "axios";
 type Props = {
   user: User;
   foodList: Food[];
-  avatarUrl: string;
+  userProfile: UserProfile;
 };
 
-const ProfilePage: FC<Props> = ({ user, foodList, avatarUrl }) => {
+const ProfilePage: FC<Props> = ({ user, foodList, userProfile }) => {
   const [opened, setOpened] = useState(false);
   const [avatar, setAvatar] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
+
+  const avatarUrl =
+    userProfile !== null &&
+    `https://rfywzcevofggvafxnozh.supabase.co/storage/v1/object/public/avatar/${userProfile?.avatar_id}`;
 
   const handleAvatarUpload = async () => {
     setUploading(true);
@@ -40,25 +46,41 @@ const ProfilePage: FC<Props> = ({ user, foodList, avatarUrl }) => {
               body: compressedResult,
             }
           );
-          const error = await axios.post("/api/user/profile-update", {
-            newAvatarId: data.path,
+
+          const userProfile = {
+            avatarId: data.path,
             userId: user.id,
-          });
-          error === null
-            ? showNotification({
-                title: `Photo uploaded.`,
-                message: "Your new avatar has been saved.",
-                color: "green",
-              })
-            : showNotification({
-                title: `There was a problem uploading your photo.`,
-                message: "Please try again later.",
-                color: "red",
-              });
+          };
+
+          const res = await axios.post("/api/user/profile-insert", userProfile);
+
+          if (res.data === "") {
+            const resUpdate = await axios.post(
+              "/api/user/profile-update",
+              userProfile
+            );
+            resUpdate.data === ""
+              ? showNotification({
+                  title: `Photo uploaded.`,
+                  message: "Your new avatar has been saved.",
+                  color: "green",
+                })
+              : showNotification({
+                  title: `There was a problem uploading your photo.`,
+                  message: "Please try again later.",
+                  color: "red",
+                });
+          } else {
+            showNotification({
+              title: `Photo uploaded.`,
+              message: "Your new avatar has been saved.",
+              color: "green",
+            });
+          }
+
+          setUploading(false);
         },
       });
-
-      setUploading(false);
     }
   };
 
@@ -68,7 +90,7 @@ const ProfilePage: FC<Props> = ({ user, foodList, avatarUrl }) => {
         width={200}
         height={200}
         src={avatarUrl || null}
-        alt="profile avatar"
+        alt=""
         radius={100}
         withPlaceholder
         onClick={() => setOpened(true)}
@@ -87,6 +109,7 @@ const ProfilePage: FC<Props> = ({ user, foodList, avatarUrl }) => {
           value={avatar}
           onChange={setAvatar}
           accept="image/*"
+          disabled={uploading}
         />
         <Button
           type="submit"

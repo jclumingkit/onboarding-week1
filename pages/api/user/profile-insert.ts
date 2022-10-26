@@ -6,14 +6,12 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { userId } = req.body;
-    const { data, error } = await supabaseClient
+    const { userId, avatarId } = req.body;
+    const { error } = await supabaseClient
       .from("user_profiles")
-      .insert({ id: userId, avatar_id: null })
+      .insert({ id: userId, avatar_id: avatarId })
       .eq("id", userId);
-    console.log(error);
-    console.log(data);
-    res.send(data);
+    res.send(error);
   } else {
     res.setHeader("Allow", ["POST"]);
     res
