@@ -54,16 +54,17 @@ const ProfilePage: FC<Props> = ({ user, foodList, userProfile }) => {
 
           const res = await axios.post("/api/user/profile-insert", userProfile);
 
-          if (res.data === "") {
+          if (res.data !== "") {
             const resUpdate = await axios.post(
               "/api/user/profile-update",
               userProfile
             );
+            console.log(resUpdate);
             resUpdate.data === ""
               ? showNotification({
-                  title: `Photo uploaded.`,
+                  title: `Photo updated.`,
                   message: "Your new avatar has been saved.",
-                  color: "green",
+                  color: "blue",
                 })
               : showNotification({
                   title: `There was a problem uploading your photo.`,
