@@ -4,7 +4,7 @@
 
 import { serve } from "https://deno.land/std@0.131.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.0.0";
-import { v4 as uuidV4 } from "https://esm.sh/uuid";
+import { v4 as uuidV4 } from "https://esm.sh/uuid@9.0.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
